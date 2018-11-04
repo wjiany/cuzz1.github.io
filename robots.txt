@@ -11,5 +11,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: http://cuzz1.github.com/sitemap.xml
-Sitemap: http://cuzz1.github.com/baidusitemap.xml
+#Sitemap: http://cuzz1.github.com/sitemap.xml
+#Sitemap: http://cuzz1.github.com/baidusitemap.xml
