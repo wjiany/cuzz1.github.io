@@ -3,29 +3,29 @@
 
 
     
-    
   <url>
     <loc>cuzz1.github.io/post/9049990f.html</loc>
-    <lastmod>2018-11-04T11:54:59.840Z</lastmod>
+    <lastmod>2018-11-05T13:37:24.982Z</lastmod>
     <data>
         <display>
         <title>Shell入门</title>
-        <pubTime>2018-11-04T11:54:59.000Z</pubTime>
+        <pubTime>2018-10-04T11:54:59.000Z</pubTime>
         
+        <tag>shell</tag>
+         
          
            
+             
+              <breadCrumb title="linux" url="cuzz1.github.io/categories/linux/"/>
+          
         </display>
     </data>
     </url>
 
     
-    
-    
-    
-    
   <url>
     <loc>cuzz1.github.io/post/7a862501.html</loc>
-    <lastmod>2018-11-04T06:14:37.480Z</lastmod>
+    <lastmod>2018-11-05T13:31:42.615Z</lastmod>
     <data>
         <display>
         <title>Python零基础入门笔记</title>
@@ -46,5 +46,10 @@
     </data>
     </url>
 
+    
+    
+    
+    
+    
     
 </urlset>

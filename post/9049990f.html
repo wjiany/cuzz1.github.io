@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="shell,">
 
 
 
@@ -98,17 +98,18 @@
 
 
 
-<meta name="description" content="爱分享，爱技术，爱生活。">
+<meta name="description" content="shell是操作系统（内核）与用户之间的桥梁    Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。 Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。 Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形">
+<meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell入门">
 <meta property="og:url" content="cuzz1.github.io/post/9049990f.html">
 <meta property="og:site_name" content="cuzz&#39;s blog">
-<meta property="og:description" content="爱分享，爱技术，爱生活。">
+<meta property="og:description" content="shell是操作系统（内核）与用户之间的桥梁    Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。 Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。 Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-04T11:54:59.840Z">
+<meta property="og:updated_time" content="2018-11-05T13:37:24.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell入门">
-<meta name="twitter:description" content="爱分享，爱技术，爱生活。">
+<meta name="twitter:description" content="shell是操作系统（内核）与用户之间的桥梁    Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。 Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。 Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形">
 
 
 
@@ -355,8 +356,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T19:54:59+08:00">
-                2018-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-04T19:54:59+08:00">
+                2018-10-04
               </time>
             
 
@@ -365,6 +366,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -399,7 +422,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1,929
                 </span>
               
 
@@ -415,7 +438,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  9
                 </span>
               
             </div>
@@ -436,7 +459,152 @@
       
 
       
-        
+        <blockquote class="blockquote-center"><p>shell是操作系统（内核）与用户之间的桥梁  </p>
+</blockquote>
+<div class="note default"><p>Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。</p>
+<p>Shell 是指一种应用程序，这个应用程序提供了一个界面，用户通过这个界面访问操作系统内核的服务。</p>
+<p>Ken Thompson 的 sh 是第一种 Unix Shell，Windows Explorer 是一个典型的图形界面 Shell</p></div>
+<a id="more"></a>
+<h1 id="Shell编程之Hello-World"><a href="#Shell编程之Hello-World" class="headerlink" title="Shell编程之Hello World"></a>Shell编程之Hello World</h1><p>编写一个hello world</p>
+<p>shell一般使用<code>.sh</code>作为后缀</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash         # 使用/bin/sh来解释执行</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span> auto echo hello world!   # 解释这个脚本是干什么的</span><br><span class="line"><span class="meta">#</span> by authors cuzz          # 作者和时间一些信息</span><br><span class="line"></span><br><span class="line">echo "hello world!"</span><br></pre></td></tr></table></figure>
+<p>给脚本添加执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; chmod +x hello.sh</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之变量"><a href="#Shell编程之变量" class="headerlink" title="Shell编程之变量"></a>Shell编程之变量</h1><p>Shell变量可以分为两类：局部变量和环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> define path variables</span><br><span class="line"><span class="meta">#</span> by authors cuzz</span><br><span class="line"></span><br><span class="line">name=cuzz    # 等号两边不能有空格</span><br><span class="line"></span><br><span class="line">echo "my name is $name"  # 使用$引用</span><br></pre></td></tr></table></figure>
+<p>基本变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo $PWD  # 当前路径</span><br><span class="line">echo $0    # 脚本名</span><br><span class="line">echo $1    # 第一个参数</span><br><span class="line">echo $2    # 第二个参数</span><br><span class="line">echo $?    # 判断上一个命令是否正确</span><br><span class="line">echo $*    # 所有参数</span><br><span class="line">echo $#    # 参数的个数</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之if条件语句"><a href="#Shell编程之if条件语句" class="headerlink" title="Shell编程之if条件语句"></a>Shell编程之if条件语句</h1><p>比较大小</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> if test</span><br><span class="line"><span class="meta">#</span> by authors cuzz</span><br><span class="line"></span><br><span class="line">num=100</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 计算使用两个小括号</span><br><span class="line">if (($num &gt; 10)); then</span><br><span class="line">    echo "this num greater than 10."</span><br><span class="line">else</span><br><span class="line">    echo "this num littler than 10."</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>逻辑运算符</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>说明</th>
+<th style="text-align:left">举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">-eq</td>
+<td>检测两个数是否相等，相等返回   true。</td>
+<td style="text-align:left">[   \$a -eq $b ] 返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:center">-ne</td>
+<td>检测两个数是否不相等，不相等返回 true。</td>
+<td style="text-align:left">[ \$a -ne $b ] 返回 true。</td>
+</tr>
+<tr>
+<td style="text-align:center">-gt</td>
+<td>检测左边的数是否大于右边的，如果是，则返回 true。</td>
+<td style="text-align:left">[ \$a -gt $b ] 返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:center">-lt</td>
+<td>检测左边的数是否小于右边的，如果是，则返回 true。</td>
+<td style="text-align:left">[ \$a -lt $b ] 返回 true。</td>
+</tr>
+<tr>
+<td style="text-align:center">-ge</td>
+<td>检测左边的数是否大于等于右边的，如果是，则返回 true。</td>
+<td style="text-align:left">[ \$a -ge $b ] 返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:center">-le</td>
+<td>检测左边的数是否小于等于右边的，如果是，则返回 true。</td>
+<td style="text-align:left">[ \$a -le $b ] 返回 true。</td>
+</tr>
+</tbody>
+</table>
+<p>目录</p>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d file</td>
+<td>检测文件是否是目录，如果是，则返回 true。</td>
+<td>[ -d $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td>
+<td>[ -f $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-p file</td>
+<td>检测文件是否是有名管道，如果是，则返回 true。</td>
+<td>[ -p $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检测文件（包括目录）是否存在，如果是，则返回 true。</td>
+<td>[ -e $file ] 返回 true。</td>
+</tr>
+</tbody>
+</table>
+<p>创建文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> if test</span><br><span class="line"><span class="meta">#</span> by authors cuzz</span><br><span class="line"></span><br><span class="line">DIR=cuzz</span><br><span class="line"></span><br><span class="line">if [ ! -d $DIR ]; then  # 都有空格</span><br><span class="line">    mkdir $DIR</span><br><span class="line">    echo "this $DIR create success."</span><br><span class="line">else</span><br><span class="line">    echo "this dir is exit."</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>测试文件是否存在</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> if test</span><br><span class="line"><span class="meta">#</span> by authors cuzz</span><br><span class="line"></span><br><span class="line">file=test.txt</span><br><span class="line"></span><br><span class="line">if [ ! -e $file ]; then  </span><br><span class="line">    echo "OK" &gt;&gt; $file  # &gt;&gt;是追加内容 &gt;是覆盖内容</span><br><span class="line">else</span><br><span class="line">    cat $file</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>mysql备份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> auto backup mysql db</span><br><span class="line"><span class="meta">#</span> by authors cuzz</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> define backup path</span><br><span class="line">BAK_DIR=/data/backup/`date +%Y%m%d` # 反引号可以把里面当作命令来解析 </span><br><span class="line"><span class="meta">#</span> mysql</span><br><span class="line">MYSQLDB=test</span><br><span class="line">MYSQLUSER=root</span><br><span class="line">MYSQLPW=123456</span><br><span class="line">MYSQLCMD=/usr/bin/mysqldump # 备份命令</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 判断是否是root</span><br><span class="line">if [ $UID -ne 0 ]; then</span><br><span class="line">    echo "Only root can execute Shell."</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ ! -d $BAK_DIR ]; then</span><br><span class="line">    mkdir -p $BAK_DIR      # -p 父目录不存在就创建</span><br><span class="line">    echo "The $BAK_DIR create success."</span><br><span class="line">else</span><br><span class="line">    echo "This $BAK_DIR is exist."</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> mysql backup command</span><br><span class="line"><span class="meta">$</span>MYSQLCMD -u$MYSQLUSER -p$MYSQLPW -d $MYSQLDB &gt;$BAK_DIR/$MYSQLDB.sql</span><br><span class="line"></span><br><span class="line">if [ $? -eq 0 ]; then</span><br><span class="line">    echo "backup success."</span><br><span class="line">else</span><br><span class="line">    echo "backup fail."</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之for循环"><a href="#Shell编程之for循环" class="headerlink" title="Shell编程之for循环"></a>Shell编程之for循环</h1><p>基本语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">for i in `seq 1 15`</span><br><span class="line">do</span><br><span class="line">    echo "the number is $i."</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>求和</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">sum=0</span><br><span class="line"></span><br><span class="line">for ((i=1; i&lt;=100; i++)) # 双括号用于运算相当与其他语言的单括号</span><br><span class="line">do</span><br><span class="line">    sum=`expr $sum + $i` # expr用于计算</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo "$sum"</span><br></pre></td></tr></table></figure>
+<p>打包，只能打包到最后一个，后面的会把前面的覆盖了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">for file in `find ./ -name "*.sh"`</span><br><span class="line"></span><br><span class="line">do</span><br><span class="line">    tar -czf all.tgz $file</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之while循环"><a href="#Shell编程之while循环" class="headerlink" title="Shell编程之while循环"></a>Shell编程之while循环</h1><p>使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">i=0</span><br><span class="line">while [[ $i -lt 10 ]]  # (( $i &lt; 10))是一样的</span><br><span class="line">do</span><br><span class="line">    echo "$i"</span><br><span class="line">    ((i++))</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>结合read使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"></span><br><span class="line">while read line   # 把读取的东西赋值给line</span><br><span class="line">do</span><br><span class="line">    echo $line</span><br><span class="line">done &lt;/etc/hosts  # 从哪里读取</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之数组"><a href="#Shell编程之数组" class="headerlink" title="Shell编程之数组"></a>Shell编程之数组</h1><p>Shell 数组用括号来表示，元素用”空格”符号分割开，语法格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">my_array=(A B "C" D) # 定义数组</span><br><span class="line"></span><br><span class="line">array_name[0]=value0 # 使用下标来定义</span><br><span class="line">array_name[1]=value1</span><br><span class="line">array_name[2]=value2</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>&#123;array_name[0]&#125;	 # 读取第一个元素</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>&#123;my_array[*]&#125;		 # 读取所有元素	</span><br><span class="line"><span class="meta">$</span>&#123;my_array[@]&#125;		 # 读取所有元素</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>&#123;#my_array[*]&#125; 	 # 读取数组长度</span><br><span class="line"><span class="meta">$</span>&#123;#my_array[@]&#125;		 # 读取数组长度</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之函数"><a href="#Shell编程之函数" class="headerlink" title="Shell编程之函数"></a>Shell编程之函数</h1><p>无返回值得函数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sayHello()&#123;                  # 定义函数一</span><br><span class="line">    echo "hello"</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sayHelloWorld()&#123;    # 定义函数二</span><br><span class="line">    echo "hello world"</span><br><span class="line">&#125;</span><br><span class="line">sayhell  # 使用函数</span><br></pre></td></tr></table></figure>
+<p>有返回值得，使用return只能返回0-255</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function sum()</span><br><span class="line">&#123;</span><br><span class="line">  returnValue=$(( $1 + $2 ))</span><br><span class="line">  return $returnValue</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum 22 4</span><br><span class="line"></span><br><span class="line">echo $?</span><br></pre></td></tr></table></figure>
+<p>可以使用echo来传递参数 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function length()</span><br><span class="line">&#123;</span><br><span class="line">  str=$1</span><br><span class="line">  result=0</span><br><span class="line">  if [ "$str" != "" ] ; then</span><br><span class="line">      result=$&#123;#str&#125;</span><br><span class="line">  fi</span><br><span class="line">  echo "$result"</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">len=$(length "abc123")  # 调用</span><br><span class="line"></span><br><span class="line">echo "The string's length is $len "</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之sed命令"><a href="#Shell编程之sed命令" class="headerlink" title="Shell编程之sed命令"></a>Shell编程之sed命令</h1><p>把test.txt中的old修改为new，要使用-i才能插入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed -i &apos;s/old/new/s&apos; test.txt</span><br></pre></td></tr></table></figure>
+<p>在每行行前面添加一个cuzz</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed -i  sed &apos;s/^/&amp;cuzz/g&apos; test.txt</span><br></pre></td></tr></table></figure>
+<p>在每行的末尾添加一个cuzz</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed  -i &apos;s/$/&amp; cuzz/g&apos; test.txt</span><br></pre></td></tr></table></figure>
+<p>匹配某一行，在下方插入一行，找到cuzz这行在下方插入####</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed &apos;/cuzz/a #######&apos; test.txt</span><br></pre></td></tr></table></figure>
+<p>在之前添加一行，只要把a改成i</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed &apos;/cuzz/i #######&apos; test.txt</span><br></pre></td></tr></table></figure>
+<p>打印</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; sed -n &apos;/cuzz/p&apos; test.txt  # 打印含有cuzz这一行</span><br><span class="line">&gt; sed -n &apos;1p&apos; test.txt       # 打印第一行</span><br><span class="line">&gt; sed -n &apos;1,5p&apos; text.txt     # 打印1到5行</span><br></pre></td></tr></table></figure>
+<p>查找最大和最小值 number.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">12 324 56 0034 -23 345</span><br><span class="line">345 349- 245 345 </span><br><span class="line"></span><br><span class="line">345 0989 0459 -25</span><br></pre></td></tr></table></figure>
+<p>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat number.txt | sed 's/ /\n/g' | grep -v "^$" | sort -nr | sed -n '1p;$p'</span><br><span class="line"></span><br><span class="line">sed 's/ /\n/g'  # 把所有空格换成换行</span><br><span class="line">grep -v "^$"    # 去掉所有空格</span><br><span class="line">sort -nr        # 降序排列</span><br><span class="line">sed -n '1p;$p   # 找出第1行和最后一行</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之grep命令"><a href="#Shell编程之grep命令" class="headerlink" title="Shell编程之grep命令"></a>Shell编程之grep命令</h1><blockquote>
+<p>-a ：将 binary 文件以 text 文件的方式搜寻数据</p>
+<p>-c ：计算找到 ‘搜寻字符串’ 的次数</p>
+<p>-i ：忽略大小写的不同，所以大小写视为相同</p>
+<p>-n ：顺便输出行号</p>
+<p>-v ：反向选择，亦即显示出没有 ‘搜寻字符串’ 内容的那一行</p>
+<p>–color=auto ：可以将找到的关键词部分加上颜色的显示</p>
+</blockquote>
+<p>egrep 和grep -E 相同，可以使用正则表达式</p>
+<h1 id="Shell编程之awk命令"><a href="#Shell编程之awk命令" class="headerlink" title="Shell编程之awk命令"></a>Shell编程之awk命令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 每行按空格或TAB分割</span><br><span class="line">cat test.txt | awk '&#123;print $1&#125;'      # 行匹配语句 awk '' 只能用单引号</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 指定分割</span><br><span class="line">awk -F                               #-F相当于内置变量FS, 指定分割字符</span><br><span class="line">cat test.txt | awk -F: '&#123;print $1&#125;'  # 以分号分割</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 指定添加某些内容</span><br><span class="line">cat test.txt | awk -F: '&#123;print "haha" $1&#125;' # 提前出来再添加haha</span><br></pre></td></tr></table></figure>
+<h1 id="Shell编程之find命令"><a href="#Shell编程之find命令" class="headerlink" title="Shell编程之find命令"></a>Shell编程之find命令</h1><p>基本命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">find /dir -name "test.txt"          # 在/dir目录下查找</span><br><span class="line">find . -name "test.txt"             # 在当前目录下找 </span><br><span class="line">find . -maxdepth 1 -name "text.txt" # 只遍历一层</span><br><span class="line">find . -type f -name "text"         # 指定类型</span><br><span class="line">find . -name "text" -mtime -1       # 指定时间</span><br><span class="line">find . -size +20M                   # 指定大小</span><br></pre></td></tr></table></figure>
+<p>查找并执行其他命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name "text.txt" -exec rm -rf &#123;&#125; \;  # 后面&#123;&#125; \是固定格式</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -456,6 +624,35 @@
 <div>
       
         
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/post/9049990f.html">Shell入门</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
+  <p><span>发布时间:</span>2018年10月04日 - 19:10</p>
+  <p><span>最后更新:</span>2018年11月05日 - 21:11</p>
+  <p><span>原始链接:</span><a href="/post/9049990f.html" title="Shell入门">cuzz1.github.io/post/9049990f.html</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="cuzz1.github.io/post/9049990f.html" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
       
 </div>
     
@@ -465,6 +662,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          
+        </div>
       
 
       
@@ -581,8 +784,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -610,7 +822,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -621,7 +833,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -682,6 +894,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之Hello-World"><span class="nav-number">1.</span> <span class="nav-text">Shell编程之Hello World</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之变量"><span class="nav-number">2.</span> <span class="nav-text">Shell编程之变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之if条件语句"><span class="nav-number">3.</span> <span class="nav-text">Shell编程之if条件语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之for循环"><span class="nav-number">4.</span> <span class="nav-text">Shell编程之for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之while循环"><span class="nav-number">5.</span> <span class="nav-text">Shell编程之while循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之数组"><span class="nav-number">6.</span> <span class="nav-text">Shell编程之数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之函数"><span class="nav-number">7.</span> <span class="nav-text">Shell编程之函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之sed命令"><span class="nav-number">8.</span> <span class="nav-text">Shell编程之sed命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之grep命令"><span class="nav-number">9.</span> <span class="nav-text">Shell编程之grep命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之awk命令"><span class="nav-number">10.</span> <span class="nav-text">Shell编程之awk命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程之find命令"><span class="nav-number">11.</span> <span class="nav-text">Shell编程之find命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -703,7 +931,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.3k字</span>
+  <span class="post-count">博客全站共24.3k字</span>
 </div>
   
 </div>
