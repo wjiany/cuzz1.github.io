@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="cuzz&#39;s blog">
 <meta property="og:description" content="今天看到一篇面经，算法题是手写堆排序，《算法》放在书架已经有一段时间了，想试试能不能写出来，然而并没有，所以记录一下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-11T15:54:11.978Z">
+<meta property="og:updated_time" content="2019-04-21T15:15:47.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="堆排序">
 <meta name="twitter:description" content="今天看到一篇面经，算法题是手写堆排序，《算法》放在书架已经有一段时间了，想试试能不能写出来，然而并没有，所以记录一下">
@@ -410,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  714
+                  451
                 </span>
               
 
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -449,31 +449,7 @@
       
         <p>今天看到一篇面经，算法题是手写堆排序，《算法》放在书架已经有一段时间了，想试试能不能写出来，然而并没有，所以记录一下</p>
 <a id="more"></a>
-<h1 id="自顶到底构造堆"><a href="#自顶到底构造堆" class="headerlink" title="自顶到底构造堆"></a>自顶到底构造堆</h1><p>这是一道lintcode上面的题目<a href="https://www.lintcode.com/problem/heapify/description" target="_blank" rel="noopener">堆化</a></p>
-<blockquote>
-<p><strong>描述</strong></p>
-<p>给出一个整数数组，堆化操作就是把它变成一个最小堆数组。</p>
-<p>对于堆数组A，A[0]是堆的根，并对于每个A[i]，A [i <em> 2 + 1]是A[i]的左儿子并且A[i </em> 2 + 2]是A[i]的右儿子。</p>
-<p>您在真实的面试中是否遇到过这个题？  是</p>
-<p>题目纠错</p>
-<p><strong>说明</strong></p>
-<p>什么是堆？</p>
-<ul>
-<li>堆是一种数据结构，它通常有三种方法：push， pop 和 top。其中，“push”添加新的元素进入堆，“pop”删除堆中最小/最大元素，“top”返回堆中最小/最大元素。</li>
-</ul>
-<p>什么是堆化？</p>
-<ul>
-<li>把一个无序整数数组变成一个堆数组。如果是最小堆，每个元素A[i]，我们将得到A[i <em> 2 + 1] &gt;= A[i]和A[i </em> 2 + 2] &gt;= A[i]</li>
-</ul>
-<p>如果有很多种堆化的结果？</p>
-<ul>
-<li>返回其中任何一个。</li>
-</ul>
-<p><strong>样例</strong></p>
-<p>给出 <code>[3,2,1,4,5]</code>，返回<code>[1,2,3,4,5]</code> 或者任何一个合法的堆数组</p>
-<p><strong>挑战</strong></p>
-<p>O(n)的时间复杂度完成堆化</p>
-</blockquote>
+<h1 id="自顶到底构造堆"><a href="#自顶到底构造堆" class="headerlink" title="自顶到底构造堆"></a>自顶到底构造堆</h1><p>这是一道 lintcode上面的题目<a href="https://www.lintcode.com/problem/heapify/description" target="_blank" rel="noopener">堆化</a></p>
 <p>构造一个堆只需要从左到右遍历数组，每次只要保证所遍历到的位子能满足堆的条件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * @param A: Given an integer array</span></span><br><span class="line"><span class="comment">     * @return: nothing</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</span><br><span class="line">            swim(A, i);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 上浮</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(i &gt; <span class="number">0</span> &amp;&amp; A[i] &lt; A[(i-<span class="number">1</span>) / <span class="number">2</span>]) &#123;</span><br><span class="line">            swap(A, i, (i-<span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">            i = (i-<span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = A[i];</span><br><span class="line">        A[i] = A[j];</span><br><span class="line">        A[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="自底到顶构造堆"><a href="#自底到顶构造堆" class="headerlink" title="自底到顶构造堆"></a>自底到顶构造堆</h1><p>而堆排序采用的是自底到顶构造堆，每次把第一个元素和最后一个元素交换，交换之后把第一个元素下沉，同时堆数组减一，下面是代码</p>
@@ -507,7 +483,7 @@
   <p><span>本文标题:</span><a href="/2018/11/23/堆排序/">堆排序</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2018年11月23日 - 22:11</p>
-  <p><span>最后更新:</span>2019年01月11日 - 23:01</p>
+  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
   <p><span>原始链接:</span><a href="/2018/11/23/堆排序/" title="堆排序">http://blog.cuzz.site/2018/11/23/堆排序/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2018/11/23/堆排序/" aria-label="复制成功！"></i></span>
   </p>
@@ -579,8 +555,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/30/第 1 期/" rel="prev" title="第 1 期">
-                第 1 期 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/11/30/201811/" rel="prev" title="201811">
+                201811 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -686,7 +662,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -697,7 +673,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -708,7 +684,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -806,7 +782,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共39.0k字</span>
+  <span class="post-count">博客全站共112.1k字</span>
 </div>
   
 </div>
@@ -1404,7 +1380,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
     return;
   }else
     if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
-  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hijiki.model.json", 0.5);});
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/tororo.model.json", 0.5);});
 })();
 </script>
 
