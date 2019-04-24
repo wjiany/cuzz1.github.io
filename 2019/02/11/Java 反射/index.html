@@ -98,18 +98,18 @@
 
 
 
-<meta name="description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化  加载就是指将class文件读入内存，并为之创建一个Class对象，任何类被使用时系统都会建立一个Class对象 连接验证 是否有正确的内部结构，并和其他类协调一致准备 负责为类的静态成员分配内存，并设置默认初始化值解析 将类的二进制数据中的符号引用替换为直接引用 初始化对类的静">
+<meta name="description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化">
 <meta name="keywords" content="反射">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 反射">
 <meta property="og:url" content="http://blog.cuzz.site/2019/02/11/Java 反射/index.html">
 <meta property="og:site_name" content="cuzz&#39;s blog">
-<meta property="og:description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化  加载就是指将class文件读入内存，并为之创建一个Class对象，任何类被使用时系统都会建立一个Class对象 连接验证 是否有正确的内部结构，并和其他类协调一致准备 负责为类的静态成员分配内存，并设置默认初始化值解析 将类的二进制数据中的符号引用替换为直接引用 初始化对类的静">
+<meta property="og:description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-21T15:15:47.475Z">
+<meta property="og:updated_time" content="2019-04-24T12:42:17.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 反射">
-<meta name="twitter:description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化  加载就是指将class文件读入内存，并为之创建一个Class对象，任何类被使用时系统都会建立一个Class对象 连接验证 是否有正确的内部结构，并和其他类协调一致准备 负责为类的静态成员分配内存，并设置默认初始化值解析 将类的二进制数据中的符号引用替换为直接引用 初始化对类的静">
+<meta name="twitter:description" content="类加载器当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化">
 
 
 
@@ -448,6 +448,7 @@
 
       
         <h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><p>当程序有使用某个类时，如果该类还没有被加载到内存中，则系统会通过加载，连接，初始化三步来实现对这个类进行初始化</p>
+<a id="more"></a>
 <ul>
 <li>加载<br>就是指将<code>class</code>文件读入内存，并为之创建一个<code>Class</code>对象，任何类被使用时系统都会建立一个<code>Class</code>对象</li>
 <li>连接<br>验证 是否有正确的内部结构，并和其他类协调一致<br>准备 负责为类的静态成员分配内存，并设置默认初始化值<br>解析 将类的二进制数据中的符号引用替换为直接引用</li>
@@ -543,7 +544,7 @@
 <li>获取构造方法</li>
 <li>通过构造方法，创建对象</li>
 <li>获取指定的方法</li>
-<li>执行找到的方法(如果获取的是私有方法则要开启暴力访问<code>m5.setAccessible(true)</code>)<br><code>public Object invoke(Object obj,  Object... args)</code> 执行指定对象obj中，当前Method对象所代表的方法，方法要传入的参数通过<code>args</code>指定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.cuzz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test6</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 获取Class对象</span></span><br><span class="line">		Class c = Class.forName(<span class="string">"cn.cuzz.Person"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 获取指定构造器</span></span><br><span class="line">		Constructor con =  c.getConstructor(String.class, <span class="keyword">int</span>.class, String.class);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 通过构造方法中的Constructor的方法 创建对象</span></span><br><span class="line">		Object obj = con.newInstance(<span class="string">"cuzz"</span>, <span class="number">18</span>, <span class="string">"武汉"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 获取指定的方法</span></span><br><span class="line">		Method m4 = c.getMethod(<span class="string">"method4"</span>, String.class);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 执行找到的方法</span></span><br><span class="line">		Object result = m4.invoke(obj, <span class="string">"2018/03/19"</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"result = "</span> + result); <span class="comment">// result = 哈哈2018/03/19</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>执行找到的方法(如果获取的是私有方法则要开启暴力访问<code>m5.setAccessible(true)</code>)<br> <code>public Object invoke(Object obj,  Object... args)</code> 执行指定对象obj中，当前Method对象所代表的方法，方法要传入的参数通过<code>args</code>指定<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.cuzz;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test6</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 获取Class对象</span></span><br><span class="line">		Class c = Class.forName(<span class="string">"cn.cuzz.Person"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 获取指定构造器</span></span><br><span class="line">		Constructor con =  c.getConstructor(String.class, <span class="keyword">int</span>.class, String.class);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 通过构造方法中的Constructor的方法 创建对象</span></span><br><span class="line">		Object obj = con.newInstance(<span class="string">"cuzz"</span>, <span class="number">18</span>, <span class="string">"武汉"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 获取指定的方法</span></span><br><span class="line">		Method m4 = c.getMethod(<span class="string">"method4"</span>, String.class);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 执行找到的方法</span></span><br><span class="line">		Object result = m4.invoke(obj, <span class="string">"2018/03/19"</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"result = "</span> + result); <span class="comment">// result = 哈哈2018/03/19</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="反射练习"><a href="#反射练习" class="headerlink" title="反射练习"></a>反射练习</h2><p>下面展示一下反射的利用场景。</p>
@@ -590,7 +591,7 @@
   <p><span>本文标题:</span><a href="/2019/02/11/Java 反射/">Java 反射</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2019年02月11日 - 23:02</p>
-  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年04月24日 - 20:04</p>
   <p><span>原始链接:</span><a href="/2019/02/11/Java 反射/" title="Java 反射">http://blog.cuzz.site/2019/02/11/Java 反射/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2019/02/11/Java 反射/" aria-label="复制成功！"></i></span>
   </p>
