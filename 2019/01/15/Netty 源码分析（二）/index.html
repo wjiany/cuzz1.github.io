@@ -85,7 +85,7 @@
 
 
 
-  <meta name="keywords" content="源码,">
+  <meta name="keywords" content="源码,NIO,Reactor,">
 
 
 
@@ -99,7 +99,7 @@
 
 
 <meta name="description" content="版本 4.1.15    官网：https://netty.io/  Netty is an asynchronous event-driven network application framework  for rapid development of maintainable high performance protocol servers &amp;amp; clients.">
-<meta name="keywords" content="源码">
+<meta name="keywords" content="源码,NIO,Reactor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Netty 源码分析（二）">
 <meta property="og:url" content="http://blog.cuzz.site/2019/01/15/Netty 源码分析（二）/index.html">
@@ -108,7 +108,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.cuzz.site/2019/01/15/Netty%20源码分析（二）/Netty%20源码分析（二）/reactor.png">
 <meta property="og:image" content="http://blog.cuzz.site/2019/01/15/Netty%20源码分析（二）/Netty%20源码分析（二）/1547524182709.png">
-<meta property="og:updated_time" content="2019-04-21T15:15:47.479Z">
+<meta property="og:updated_time" content="2019-10-19T16:46:20.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty 源码分析（二）">
 <meta name="twitter:description" content="版本 4.1.15    官网：https://netty.io/  Netty is an asynchronous event-driven network application framework  for rapid development of maintainable high performance protocol servers &amp;amp; clients.">
@@ -413,7 +413,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,365
+                  4,361
                 </span>
               
 
@@ -464,7 +464,7 @@
 <p> <a href="http://developer.51cto.com/art/201811/586203.htm" target="_blank" rel="noopener">这可能是目前最透彻的Netty原理架构解析</a></p>
 <p><a href="https://www.jianshu.com/p/1ccbc6a348db" target="_blank" rel="noopener">Netty 那些事儿 ——— Reactor模式详解</a></p>
 <p>Netty Reactor 工作架构图</p>
-<p><img src="Netty 源码分析（二）\reactor.png" alt="reactor"></p>
+<p><img src="Netty 源码分析（二）/reactor.png" alt="reactor"></p>
 <h2 id="bind-方法"><a href="#bind-方法" class="headerlink" title="bind() 方法"></a>bind() 方法</h2><p>前面通过 <code>.channel(NioServerSocketChannel.class)</code> 是为了通过反射创建一个 <code>NioServerSocketChannel</code> 对象</p>
 <h3 id="NioServerSocketChannel"><a href="#NioServerSocketChannel" class="headerlink" title="NioServerSocketChannel"></a>NioServerSocketChannel</h3><p>使用反射创建 <code>NioServerSocketChannel</code> 肯定是通过无参数构造器，在调用 <code>newSocket(DEFAULT_SELECTOR_PROVIDER)</code> 所以这是一个静态方法，返回一个 <code>ServerSocketChannel</code> </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A &#123;<span class="doctag">@link</span> io.netty.channel.socket.ServerSocketChannel&#125; implementation which uses</span></span><br><span class="line"><span class="comment"> * NIO selector based implementation to accept new connections.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NioServerSocketChannel</span> <span class="keyword">extends</span> <span class="title">AbstractNioMessageChannel</span></span></span><br><span class="line"><span class="class">                             <span class="keyword">implements</span> <span class="title">io</span>.<span class="title">netty</span>.<span class="title">channel</span>.<span class="title">socket</span>.<span class="title">ServerSocketChannel</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ChannelMetadata METADATA = <span class="keyword">new</span> ChannelMetadata(<span class="keyword">false</span>, <span class="number">16</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> SelectorProvider DEFAULT_SELECTOR_PROVIDER = SelectorProvider.provider();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ServerSocketChannel <span class="title">newSocket</span><span class="params">(SelectorProvider provider)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             *  Use the &#123;<span class="doctag">@link</span> SelectorProvider&#125; to open &#123;<span class="doctag">@link</span> SocketChannel&#125; and so remove condition in</span></span><br><span class="line"><span class="comment">             *  &#123;<span class="doctag">@link</span> SelectorProvider#provider()&#125; which is called by each ServerSocketChannel.open() otherwise.</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             *  See &lt;a href="https://github.com/netty/netty/issues/2308"&gt;#2308&lt;/a&gt;.</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">return</span> provider.openServerSocketChannel();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ChannelException(</span><br><span class="line">                    <span class="string">"Failed to open a server socket."</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ServerSocketChannelConfig config;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create a new instance</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NioServerSocketChannel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(newSocket(DEFAULT_SELECTOR_PROVIDER));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create a new instance using the given &#123;<span class="doctag">@link</span> SelectorProvider&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NioServerSocketChannel</span><span class="params">(SelectorProvider provider)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(newSocket(provider));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create a new instance using the given &#123;<span class="doctag">@link</span> ServerSocketChannel&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NioServerSocketChannel</span><span class="params">(ServerSocketChannel channel)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="keyword">null</span>, channel, SelectionKey.OP_ACCEPT);</span><br><span class="line">        config = <span class="keyword">new</span> NioServerSocketChannelConfig(<span class="keyword">this</span>, javaChannel().socket());</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -503,23 +503,16 @@
 <p>这里维护了一个上下文，并且把 <code>Channel</code> 对象赋值给自己，所以 <code>Channel</code> 和 <code>Pipeline</code> 是相互引用的</p>
 <h3 id="ChannelPipeline"><a href="#ChannelPipeline" class="headerlink" title="ChannelPipeline"></a>ChannelPipeline</h3><p>io.netty.channel.ChannelPipeline</p>
 <p>文档：</p>
-<blockquote>
 <p>A list of ChannelHandlers which handles or intercepts inbound events and outbound operations of a Channel. ChannelPipeline implements an advanced form of the Intercepting Filter pattern to give a user full control over how an event is handled and how the ChannelHandlers in a pipeline interact with each other.</p>
 <p><strong>Creation of a pipeline</strong></p>
 <p>Each channel has its own pipeline and it is created automatically when a new channel is created.</p>
 <p><strong>How an event flows in a pipeline</strong></p>
 <p>The following diagram describes how I/O events are processed by ChannelHandlers in a ChannelPipeline typically. An I/O event is handled by either a ChannelInboundHandler or a ChannelOutboundHandler and be forwarded to its closest handler by calling the event propagation methods defined in ChannelHandlerContext, such as ChannelHandlerContext.fireChannelRead(Object) and ChannelHandlerContext.write(Object).</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&gt;                                                    I/O Request</span><br><span class="line">&gt;                                               via Channel or</span><br><span class="line">&gt;                                           ChannelHandlerContext</span><br><span class="line">&gt;                                                         |</span><br><span class="line">&gt;     +---------------------------------------------------+---------------+</span><br><span class="line">&gt;     |                           ChannelPipeline         |               |</span><br><span class="line">&gt;     |                                                  \|/              |</span><br><span class="line">&gt;     |    +---------------------+            +-----------+----------+    |</span><br><span class="line">&gt;     |    | Inbound Handler  N  |            | Outbound Handler  1  |    |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |              /|\                                  |               |</span><br><span class="line">&gt;     |               |                                  \|/              |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |    | Inbound Handler N-1 |            | Outbound Handler  2  |    |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |              /|\                                  .               |</span><br><span class="line">&gt;     |               .                                   .               |</span><br><span class="line">&gt;     | ChannelHandlerContext.fireIN_EVT() ChannelHandlerContext.OUT_EVT()|</span><br><span class="line">&gt;     |        [ method call]                       [method call]         |</span><br><span class="line">&gt;     |               .                                   .               |</span><br><span class="line">&gt;     |               .                                  \|/              |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |    | Inbound Handler  2  |            | Outbound Handler M-1 |    |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |              /|\                                  |               |</span><br><span class="line">&gt;     |               |                                  \|/              |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |    | Inbound Handler  1  |            | Outbound Handler  M  |    |</span><br><span class="line">&gt;     |    +----------+----------+            +-----------+----------+    |</span><br><span class="line">&gt;     |              /|\                                  |               |</span><br><span class="line">&gt;     +---------------+-----------------------------------+---------------+</span><br><span class="line">&gt;                     |                                  \|/</span><br><span class="line">&gt;     +---------------+-----------------------------------+---------------+</span><br><span class="line">&gt;     |               |                                   |               |</span><br><span class="line">&gt;     |       [ Socket.read() ]                    [ Socket.write() ]     |</span><br><span class="line">&gt;     |                                                                   |</span><br><span class="line">&gt;     |  Netty Internal I/O Threads (Transport Implementation)            |</span><br><span class="line">&gt;     +-------------------------------------------------------------------+</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">                                               I/O Request</span><br><span class="line">                                          via Channel or</span><br><span class="line">                                      ChannelHandlerContext</span><br><span class="line">                                                    |</span><br><span class="line">+---------------------------------------------------+---------------+</span><br><span class="line">|                           ChannelPipeline         |               |</span><br><span class="line">|                                                  \|/              |</span><br><span class="line">|    +---------------------+            +-----------+----------+    |</span><br><span class="line">|    | Inbound Handler  N  |            | Outbound Handler  1  |    |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|              /|\                                  |               |</span><br><span class="line">|               |                                  \|/              |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|    | Inbound Handler N-1 |            | Outbound Handler  2  |    |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|              /|\                                  .               |</span><br><span class="line">|               .                                   .               |</span><br><span class="line">| ChannelHandlerContext.fireIN_EVT() ChannelHandlerContext.OUT_EVT()|</span><br><span class="line">|        [ method call]                       [method call]         |</span><br><span class="line">|               .                                   .               |</span><br><span class="line">|               .                                  \|/              |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|    | Inbound Handler  2  |            | Outbound Handler M-1 |    |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|              /|\                                  |               |</span><br><span class="line">|               |                                  \|/              |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|    | Inbound Handler  1  |            | Outbound Handler  M  |    |</span><br><span class="line">|    +----------+----------+            +-----------+----------+    |</span><br><span class="line">|              /|\                                  |               |</span><br><span class="line">+---------------+-----------------------------------+---------------+</span><br><span class="line">                |                                  \|/</span><br><span class="line">+---------------+-----------------------------------+---------------+</span><br><span class="line">|               |                                   |               |</span><br><span class="line">|       [ Socket.read() ]                    [ Socket.write() ]     |</span><br><span class="line">|                                                                   |</span><br><span class="line">|  Netty Internal I/O Threads (Transport Implementation)            |</span><br><span class="line">+-------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
 <p>An inbound event is handled by the inbound handlers in the bottom-up direction as shown on the left side of the diagram. An inbound handler usually handles the inbound data generated by the I/O thread on the bottom of the diagram. The inbound data is often read from a remote peer via the actual input operation such as SocketChannel.read(ByteBuffer). If an inbound event goes beyond the top inbound handler, it is discarded silently, or logged if it needs your attention.</p>
 <p>An outbound event is handled by the outbound handler in the top-down direction as shown on the right side of the diagram. An outbound handler usually generates or transforms the outbound traffic such as write requests. If an outbound event goes beyond the bottom outbound handler, it is handled by an I/O thread associated with the Channel. The I/O thread often performs the actual output operation such as SocketChannel.write(ByteBuffer)</p>
 <p>For example, let us assume that we created the following pipeline:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;    ChannelPipeline p = ...;</span><br><span class="line">&gt;    p.addLast(<span class="string">"1"</span>, <span class="keyword">new</span> InboundHandlerA());</span><br><span class="line">&gt;    p.addLast(<span class="string">"2"</span>, <span class="keyword">new</span> InboundHandlerB());</span><br><span class="line">&gt;    p.addLast(<span class="string">"3"</span>, <span class="keyword">new</span> OutboundHandlerA());</span><br><span class="line">&gt;    p.addLast(<span class="string">"4"</span>, <span class="keyword">new</span> OutboundHandlerB());</span><br><span class="line">&gt;    p.addLast(<span class="string">"5"</span>, <span class="keyword">new</span> InboundOutboundHandlerX());</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ChannelPipeline p = ...;</span><br><span class="line">p.addLast(<span class="string">"1"</span>, <span class="keyword">new</span> InboundHandlerA());</span><br><span class="line">p.addLast(<span class="string">"2"</span>, <span class="keyword">new</span> InboundHandlerB());</span><br><span class="line">p.addLast(<span class="string">"3"</span>, <span class="keyword">new</span> OutboundHandlerA());</span><br><span class="line">p.addLast(<span class="string">"4"</span>, <span class="keyword">new</span> OutboundHandlerB());</span><br><span class="line">p.addLast(<span class="string">"5"</span>, <span class="keyword">new</span> InboundOutboundHandlerX());</span><br></pre></td></tr></table></figure>
 <p>In the example above, the class whose name starts with Inbound means it is an inbound handler. The class whose name starts with Outbound means it is a outbound handler.</p>
 <p>In the given example configuration, the handler evaluation order is 1, 2, 3, 4, 5 when an event goes inbound. When an event goes outbound, the order is 5, 4, 3, 2, 1. On top of this principle, ChannelPipeline skips the evaluation of certain handlers to shorten the stack depth:</p>
 <ul>
@@ -555,10 +548,7 @@
 </li>
 </ul>
 <p>and the following example shows how the event propagation is usually done:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInboundHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">&gt;         <span class="meta">@Override</span></span><br><span class="line">&gt;        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">&gt;            System.out.println(<span class="string">"Connected!"</span>);</span><br><span class="line">&gt;            ctx.fireChannelActive();</span><br><span class="line">&gt;        &#125;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;   </span><br><span class="line">&gt;    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyOutboundHandler</span> <span class="keyword">extends</span> <span class="title">ChannelOutboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">&gt;         <span class="meta">@Override</span></span><br><span class="line">&gt;        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(ChannelHandlerContext ctx, ChannelPromise promise)</span> </span>&#123;</span><br><span class="line">&gt;            System.out.println(<span class="string">"Closing .."</span>);</span><br><span class="line">&gt;            ctx.close(promise);</span><br><span class="line">&gt;        &#125;</span><br><span class="line">&gt;    &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInboundHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Connected!"</span>);</span><br><span class="line">        ctx.fireChannelActive();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyOutboundHandler</span> <span class="keyword">extends</span> <span class="title">ChannelOutboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(ChannelHandlerContext ctx, ChannelPromise promise)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Closing .."</span>);</span><br><span class="line">        ctx.close(promise);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>Building a pipeline</strong> (重点)</p>
 <p>A user is supposed to have one or more ChannelHandlers in a pipeline to receive I/O events (e.g. read) and to request I/O operations (e.g. write and close). For example, a typical server will have the following handlers in each channel’s pipeline, but your mileage may vary depending on the complexity and characteristics of the protocol and business logic:</p>
 <ul>
@@ -567,19 +557,15 @@
 <li>Business Logic Handler - performs the actual business logic (e.g. database access).</li>
 </ul>
 <p>and it could be represented as shown in the following example:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;    <span class="keyword">static</span> <span class="keyword">final</span> EventExecutorGroup group = <span class="keyword">new</span> DefaultEventExecutorGroup(<span class="number">16</span>);</span><br><span class="line">&gt;    ...</span><br><span class="line">&gt;   </span><br><span class="line">&gt;    ChannelPipeline pipeline = ch.pipeline();</span><br><span class="line">&gt;   </span><br><span class="line">&gt;    pipeline.addLast(<span class="string">"decoder"</span>, <span class="keyword">new</span> MyProtocolDecoder());</span><br><span class="line">&gt;    pipeline.addLast(<span class="string">"encoder"</span>, <span class="keyword">new</span> MyProtocolEncoder());</span><br><span class="line">&gt;   </span><br><span class="line">&gt;    <span class="comment">// Tell the pipeline to run MyBusinessLogicHandler's event handler methods</span></span><br><span class="line">&gt;    <span class="comment">// in a different thread than an I/O thread so that the I/O thread is not blocked by</span></span><br><span class="line">&gt;    <span class="comment">// a time-consuming task.</span></span><br><span class="line">&gt;    <span class="comment">// If your business logic is fully asynchronous or finished very quickly, you don't</span></span><br><span class="line">&gt;    <span class="comment">// need to specify a group.</span></span><br><span class="line">&gt;    pipeline.addLast(group, <span class="string">"handler"</span>, <span class="keyword">new</span> MyBusinessLogicHandler());</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>&gt;</p>
-<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> EventExecutorGroup group = <span class="keyword">new</span> DefaultEventExecutorGroup(<span class="number">16</span>);</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">ChannelPipeline pipeline = ch.pipeline();</span><br><span class="line"></span><br><span class="line">pipeline.addLast(<span class="string">"decoder"</span>, <span class="keyword">new</span> MyProtocolDecoder());</span><br><span class="line">pipeline.addLast(<span class="string">"encoder"</span>, <span class="keyword">new</span> MyProtocolEncoder());</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tell the pipeline to run MyBusinessLogicHandler's event handler methods</span></span><br><span class="line"><span class="comment">// in a different thread than an I/O thread so that the I/O thread is not blocked by</span></span><br><span class="line"><span class="comment">// a time-consuming task.</span></span><br><span class="line"><span class="comment">// If your business logic is fully asynchronous or finished very quickly, you don't</span></span><br><span class="line"><span class="comment">// need to specify a group.</span></span><br><span class="line">pipeline.addLast(group, <span class="string">"handler"</span>, <span class="keyword">new</span> MyBusinessLogicHandler());</span><br></pre></td></tr></table></figure>
 <p>注：可以使用重载这个方法添加一个事件循环组 group 去执行耗时的任务，获取在 MyBusinessLogicHandler 中把耗时部分异步处理，这样就不会堵塞 IO 线程</p>
 <p><strong>Thread safety</strong></p>
 <p>A ChannelHandler can be added or removed at any time because a ChannelPipeline is thread safe. For example, you can insert an encryption handler when sensitive information is about to be exchanged, and remove it after the exchange.</p>
-</blockquote>
 <p><strong>对于传统的过滤器如 <code>SpringMVC</code> 比如我们配置了 <code>Filter1</code> <code>Filter2</code> <code>Filter3</code> 过滤器，请求和返回都要经过滤器这3个过滤器，而管道可以选择的其中某些作为请求的过滤器，一些作为返回的过滤器，不一定要一样，入站的处理器专门处理入站的，出站的处理器专门处理出站的</strong></p>
 <h2 id="init-方法"><a href="#init-方法" class="headerlink" title="init() 方法"></a>init() 方法</h2><p>io.netty.bootstrap.ServerBootstrap#init</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(Channel channel)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Map&lt;ChannelOption&lt;?&gt;, Object&gt; options = options0();</span><br><span class="line">    <span class="keyword">synchronized</span> (options) &#123;</span><br><span class="line">        setChannelOptions(channel, options, logger);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Map&lt;AttributeKey&lt;?&gt;, Object&gt; attrs = attrs0();</span><br><span class="line">    <span class="keyword">synchronized</span> (attrs) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Entry&lt;AttributeKey&lt;?&gt;, Object&gt; e: attrs.entrySet()) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">            AttributeKey&lt;Object&gt; key = (AttributeKey&lt;Object&gt;) e.getKey();</span><br><span class="line">            channel.attr(key).set(e.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="ChannelOption"><a href="#ChannelOption" class="headerlink" title="ChannelOption"></a>ChannelOption</h3><p>类图</p>
-<p><img src="Netty 源码分析（二）\1547524182709.png" alt="1547524182709"></p>
+<p><img src="Netty 源码分析（二）/1547524182709.png" alt="1547524182709"></p>
 <blockquote>
 <p>io.netty.channel<br>public class ChannelOption<t><br>extends AbstractConstant<channeloption<t>&gt;</channeloption<t></t></p>
 <p>A ChannelOption allows to configure a ChannelConfig in a type-safe way. Which ChannelOption is supported depends on the actual implementation of ChannelConfig and may depend on the nature of the transport it belongs to.</p>
@@ -634,7 +620,7 @@
 <p><code>AbstractChannelHandlerContext</code> 定义了一个上下文，找到实现的一个接口 <code>ChannelHandlerContext</code></p>
 <p>io.netty.channel.ChannelHandlerContext</p>
 <p>文档：<a href="https://netty.io/5.0/api/io/netty/channel/ChannelHandlerContext.html" target="_blank" rel="noopener">https://netty.io/5.0/api/io/netty/channel/ChannelHandlerContext.html</a></p>
-<p>接下来我分析一下 <code>ChannelHandlerContext</code> ，<code>PipeLine</code>，<code>Handler</code> 这三者的关系</p>
+<p>接下来我分析一下 <code>ChannelHandlerContext</code> ，<code>PipeLine</code>，<code>Handler</code> 这三者的关系。</p>
 <p>加油！！！</p>
 
       
@@ -665,7 +651,7 @@
   <p><span>本文标题:</span><a href="/2019/01/15/Netty 源码分析（二）/">Netty 源码分析（二）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2019年01月15日 - 22:01</p>
-  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年10月20日 - 00:10</p>
   <p><span>原始链接:</span><a href="/2019/01/15/Netty 源码分析（二）/" title="Netty 源码分析（二）">http://blog.cuzz.site/2019/01/15/Netty 源码分析（二）/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2019/01/15/Netty 源码分析（二）/" aria-label="复制成功！"></i></span>
   </p>
@@ -690,6 +676,30 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请博主吃包辣条</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="cuzz 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
@@ -698,6 +708,10 @@
         <div class="post-tags">
           
             <a href="/tags/源码/" rel="tag"><i class="fa fa-tag"></i> 源码</a>
+          
+            <a href="/tags/NIO/" rel="tag"><i class="fa fa-tag"></i> NIO</a>
+          
+            <a href="/tags/Reactor/" rel="tag"><i class="fa fa-tag"></i> Reactor</a>
           
         </div>
       
@@ -793,6 +807,9 @@ var jiathis_config={
           
 
   
+	<div id="gitalk-container"></div>
+	
+  
 
 
 
@@ -842,7 +859,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -853,7 +870,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -864,7 +881,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -962,7 +979,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共113.0k字</span>
+  <span class="post-count">博客全站共135.2k字</span>
 </div>
   
 </div>
@@ -1136,6 +1153,23 @@ var jiathis_config={
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   
+   <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'e829281603f9115c572d',
+          clientSecret: '246dae10dfb1b363805ab98902dc93539c355bb3',
+          repo: 'cuzz1.github.io',
+          owner: 'cuzz1',
+          admin: ['cuzz1'],
+          id: decodeURI(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 

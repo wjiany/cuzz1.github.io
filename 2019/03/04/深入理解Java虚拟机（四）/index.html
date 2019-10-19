@@ -106,7 +106,7 @@
 <meta property="og:site_name" content="cuzz&#39;s blog">
 <meta property="og:description" content="synchronized 字节码分析我们先来看一下一个简单的方法 123456789101112/** * @Author: cuzz * @Date: 2019/3/4 13:34 * @Description: */public class MyTest02 &amp;#123;    int x = 0;    public void setX(int x) &amp;#123;        this.x">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-21T15:15:47.571Z">
+<meta property="og:updated_time" content="2019-10-19T16:46:20.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Java虚拟机（四）">
 <meta name="twitter:description" content="synchronized 字节码分析我们先来看一下一个简单的方法 123456789101112/** * @Author: cuzz * @Date: 2019/3/4 13:34 * @Description: */public class MyTest02 &amp;#123;    int x = 0;    public void setX(int x) &amp;#123;        this.x">
@@ -451,6 +451,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: cuzz</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2019/3/4 13:34</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest02</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用 <code>javap -v com.cuzz.jvm.bytecode.MyTest02</code> 命令，找到 <code>setX</code> 方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public void setX(int);</span><br><span class="line">  descriptor: (I)V</span><br><span class="line">  flags: ACC_PUBLIC</span><br><span class="line">  Code:</span><br><span class="line">    stack=2, locals=2, args_size=2</span><br><span class="line">       0: aload_0</span><br><span class="line">       1: iload_1</span><br><span class="line">       2: putfield      #2                  // Field x:I</span><br><span class="line">       5: return</span><br><span class="line">    LineNumberTable:</span><br><span class="line">      line 12: 0</span><br><span class="line">      line 13: 5</span><br><span class="line">    LocalVariableTable:</span><br><span class="line">      Start  Length  Slot  Name   Signature</span><br><span class="line">          0       6     0  this   Lcom/cuzz/jvm/bytecode/MyTest02;</span><br><span class="line">          0       6     1     x   I</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>如果我们在方法中添加 <code>synchronzied</code> 关键字</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest02</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">setX</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们再反编译一下</p>
@@ -490,7 +491,7 @@
   <p><span>本文标题:</span><a href="/2019/03/04/深入理解Java虚拟机（四）/">深入理解Java虚拟机（四）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2019年03月04日 - 23:03</p>
-  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年10月20日 - 00:10</p>
   <p><span>原始链接:</span><a href="/2019/03/04/深入理解Java虚拟机（四）/" title="深入理解Java虚拟机（四）">http://blog.cuzz.site/2019/03/04/深入理解Java虚拟机（四）/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2019/03/04/深入理解Java虚拟机（四）/" aria-label="复制成功！"></i></span>
   </p>
@@ -514,6 +515,30 @@
 </div>
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请博主吃包辣条</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="cuzz 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -618,6 +643,9 @@ var jiathis_config={
           
 
   
+	<div id="gitalk-container"></div>
+	
+  
 
 
 
@@ -667,7 +695,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -678,7 +706,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -689,7 +717,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -787,7 +815,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共113.0k字</span>
+  <span class="post-count">博客全站共135.2k字</span>
 </div>
   
 </div>
@@ -961,6 +989,23 @@ var jiathis_config={
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   
+   <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'e829281603f9115c572d',
+          clientSecret: '246dae10dfb1b363805ab98902dc93539c355bb3',
+          repo: 'cuzz1.github.io',
+          owner: 'cuzz1',
+          admin: ['cuzz1'],
+          id: decodeURI(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 

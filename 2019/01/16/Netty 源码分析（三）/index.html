@@ -108,7 +108,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.cuzz.site/2019/01/16/Netty%20源码分析（三）/Netty%20源码分析（三）/20170116160400326.png">
 <meta property="og:image" content="http://blog.cuzz.site/2019/01/16/Netty%20源码分析（三）/Netty%20源码分析（三）/1547566461118.png">
-<meta property="og:updated_time" content="2019-04-21T15:15:47.475Z">
+<meta property="og:updated_time" content="2019-10-19T16:46:20.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty 源码分析（三）">
 <meta name="twitter:description" content="版本 4.1.15    官网：https://netty.io/  Netty is an asynchronous event-driven network application framework  for rapid development of maintainable high performance protocol servers &amp;amp; clients.">
@@ -466,7 +466,7 @@
 <p><a href="https://blog.csdn.net/u010853261/article/details/54574440" target="_blank" rel="noopener">https://blog.csdn.net/u010853261/article/details/54574440</a></p>
 <h3 id="ChannelHandlerContext"><a href="#ChannelHandlerContext" class="headerlink" title="ChannelHandlerContext"></a>ChannelHandlerContext</h3><p>每个<code>ChannelHandler</code>被添加到<code>ChannelPipeline</code>后，都会创建一个<code>ChannelHandlerContext</code>并与之创建的<code>ChannelHandler</code>关联绑定。<code>ChannelHandlerContext</code>允许<code>ChannelHandler</code>与其他的<code>ChannelHandler</code>实现进行交互。<code>ChannelHandlerContext</code>不会改变添加到其中的ChannelHandler，因此它是安全的</p>
 <p>下图显示了<code>ChannelHandlerContext</code>、<code>ChannelHandler</code>、<code>ChannelPipeline</code>的关系： </p>
-<p><img src="Netty 源码分析（三）\20170116160400326.png" alt="20170116160400326"></p>
+<p><img src="Netty 源码分析（三）/20170116160400326.png" alt="20170116160400326"></p>
 <p>最后我们看到</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addLast0</span><span class="params">(AbstractChannelHandlerContext newCtx)</span> </span>&#123;</span><br><span class="line">    AbstractChannelHandlerContext prev = tail.prev;</span><br><span class="line">    newCtx.prev = prev;</span><br><span class="line">    newCtx.next = tail;</span><br><span class="line">    prev.next = newCtx;</span><br><span class="line">    tail.prev = newCtx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们的双向链表链表维护的是 <code>ChannelHandlerContext</code> 对象，而<code>ChannelHandlerContext</code> 包装了 <code>ChannelHandler</code></p>
@@ -485,7 +485,7 @@
 <p>To address this issue, we decided to keep only one map per <a href="https://netty.io/4.1/api/io/netty/channel/Channel.html" target="_blank" rel="noopener"><code>Channel</code></a> internally. <a href="https://netty.io/4.1/api/io/netty/util/AttributeMap.html" target="_blank" rel="noopener"><code>AttributeMap</code></a> always uses <a href="https://netty.io/4.1/api/io/netty/util/AttributeKey.html" target="_blank" rel="noopener"><code>AttributeKey</code></a> as its key. <a href="https://netty.io/4.1/api/io/netty/util/AttributeKey.html" target="_blank" rel="noopener"><code>AttributeKey</code></a> ensures uniqueness between each key, and thus there’s no point of having more than one attribute map per <a href="https://netty.io/4.1/api/io/netty/channel/Channel.html" target="_blank" rel="noopener"><code>Channel</code></a>. As long as a user defines its own <a href="https://netty.io/4.1/api/io/netty/util/AttributeKey.html" target="_blank" rel="noopener"><code>AttributeKey</code></a> as a private static final field of his or her <a href="https://netty.io/4.1/api/io/netty/channel/ChannelHandler.html" target="_blank" rel="noopener"><code>ChannelHandler</code></a>, there will be no risk of duplicate keys.</p>
 </blockquote>
 <p><strong>注意：现在这两个关联的是一个Map</strong></p>
-<h3 id="callHandlerCallbackLater"><a href="#callHandlerCallbackLater" class="headerlink" title="callHandlerCallbackLater"></a>callHandlerCallbackLater</h3><p><img src="Netty 源码分析（三）\1547566461118.png" alt="1547566461118"></p>
+<h3 id="callHandlerCallbackLater"><a href="#callHandlerCallbackLater" class="headerlink" title="callHandlerCallbackLater"></a>callHandlerCallbackLater</h3><p><img src="Netty 源码分析（三）/1547566461118.png" alt="1547566461118"></p>
 <p>我们回到 <code>#addLast</code> 方法上，这个时候是还没有注册的，进入这个 <code>#callHandlerCallbackLater</code> 方法，把稍后调用 Handler 回调，封装成一个 task </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">callHandlerCallbackLater</span><span class="params">(AbstractChannelHandlerContext ctx, <span class="keyword">boolean</span> added)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">assert</span> !registered;</span><br><span class="line"></span><br><span class="line">    PendingHandlerCallback task = added ? <span class="keyword">new</span> PendingHandlerAddedTask(ctx) : <span class="keyword">new</span> PendingHandlerRemovedTask(ctx);</span><br><span class="line">    PendingHandlerCallback pending = pendingHandlerCallbackHead;</span><br><span class="line">    <span class="keyword">if</span> (pending == <span class="keyword">null</span>) &#123;</span><br><span class="line">        pendingHandlerCallbackHead = task;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Find the tail of the linked-list.</span></span><br><span class="line">        <span class="keyword">while</span> (pending.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">            pending = pending.next;</span><br><span class="line">        &#125;</span><br><span class="line">        pending.next = task;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h2><p>我们回到io.netty.bootstrap.AbstractBootstrap#initAndRegister</p>
@@ -567,7 +567,7 @@
   <p><span>本文标题:</span><a href="/2019/01/16/Netty 源码分析（三）/">Netty 源码分析（三）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2019年01月16日 - 22:01</p>
-  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年10月20日 - 00:10</p>
   <p><span>原始链接:</span><a href="/2019/01/16/Netty 源码分析（三）/" title="Netty 源码分析（三）">http://blog.cuzz.site/2019/01/16/Netty 源码分析（三）/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2019/01/16/Netty 源码分析（三）/" aria-label="复制成功！"></i></span>
   </p>
@@ -591,6 +591,30 @@
 </div>
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请博主吃包辣条</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="cuzz 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -695,6 +719,9 @@ var jiathis_config={
           
 
   
+	<div id="gitalk-container"></div>
+	
+  
 
 
 
@@ -744,7 +771,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -755,7 +782,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -766,7 +793,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -864,7 +891,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共113.0k字</span>
+  <span class="post-count">博客全站共135.2k字</span>
 </div>
   
 </div>
@@ -1038,6 +1065,23 @@ var jiathis_config={
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   
+   <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'e829281603f9115c572d',
+          clientSecret: '246dae10dfb1b363805ab98902dc93539c355bb3',
+          repo: 'cuzz1.github.io',
+          owner: 'cuzz1',
+          admin: ['cuzz1'],
+          id: decodeURI(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 

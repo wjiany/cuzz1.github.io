@@ -107,7 +107,7 @@
 <meta property="og:description" content="ClassLoader文档：https://docs.oracle.com/javase/7/docs/api/java/lang/ClassLoader.html">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog.cuzz.site/2019/01/29/深入理解Java虚拟机（二）/深入理解Java虚拟机（二）/1549005960054.png">
-<meta property="og:updated_time" content="2019-04-21T15:15:47.555Z">
+<meta property="og:updated_time" content="2019-05-10T15:41:48.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Java虚拟机（二）">
 <meta name="twitter:description" content="ClassLoader文档：https://docs.oracle.com/javase/7/docs/api/java/lang/ClassLoader.html">
@@ -648,7 +648,6 @@
 <p>则输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当前线程上下文类加载器: sun.misc.Launcher$ExtClassLoader@a14482</span><br><span class="line">ServiceLoader的类加载器: null</span><br></pre></td></tr></table></figure>
 <p>可以看到循环没有去执行，上下文类加载器是扩展类加载器没啥问题，因为系统类加载器的上级是扩展类加载器，但是为什么循环是空的呢？原因就是扩展类加载器无法加载 classpath下边的类，mysql 的 jar 包是放在 classpath下边的。</p>
-<p>## </p>
 
       
     </div>
@@ -678,7 +677,7 @@
   <p><span>本文标题:</span><a href="/2019/01/29/深入理解Java虚拟机（二）/">深入理解Java虚拟机（二）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 cuzz 的个人博客">cuzz</a></p>
   <p><span>发布时间:</span>2019年01月29日 - 23:01</p>
-  <p><span>最后更新:</span>2019年04月21日 - 23:04</p>
+  <p><span>最后更新:</span>2019年05月10日 - 23:05</p>
   <p><span>原始链接:</span><a href="/2019/01/29/深入理解Java虚拟机（二）/" title="深入理解Java虚拟机（二）">http://blog.cuzz.site/2019/01/29/深入理解Java虚拟机（二）/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://blog.cuzz.site/2019/01/29/深入理解Java虚拟机（二）/" aria-label="复制成功！"></i></span>
   </p>
@@ -702,6 +701,30 @@
 </div>
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>请博主吃包辣条</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="cuzz 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -806,6 +829,9 @@ var jiathis_config={
           
 
   
+	<div id="gitalk-container"></div>
+	
+  
 
 
 
@@ -855,7 +881,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -866,7 +892,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -877,7 +903,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -975,7 +1001,7 @@ var jiathis_config={
   <span class="author" itemprop="copyrightHolder">cuzz</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共113.0k字</span>
+  <span class="post-count">博客全站共135.2k字</span>
 </div>
   
 </div>
@@ -1149,6 +1175,23 @@ var jiathis_config={
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   
+   <script src="/js/src/md5.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'e829281603f9115c572d',
+          clientSecret: '246dae10dfb1b363805ab98902dc93539c355bb3',
+          repo: 'cuzz1.github.io',
+          owner: 'cuzz1',
+          admin: ['cuzz1'],
+          id: decodeURI(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
   
 
